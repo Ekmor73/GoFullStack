@@ -43,13 +43,23 @@ func getBool(key string, defaultValue bool) bool {
 }
 
 type DatabaseConfig struct {
-	url string
+	Url string
 }
 
 // Default value
 // Функции для получения int и bool
 func NewDatabaseConfig() *DatabaseConfig {
 	return &DatabaseConfig{
-		url: getString("DATABASE_URL", ""),
+		Url: getString("DATABASE_URL", ""),
+	}
+}
+
+type LogConfig struct {
+	Level int
+}
+
+func NewLogConfig() *LogConfig {
+	return &LogConfig{
+		Level: getInt("LOG_LEVEL", 0),
 	}
 }
