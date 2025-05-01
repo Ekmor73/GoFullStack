@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
 func main() {
@@ -14,11 +15,8 @@ func main() {
 	log.Println(dbConf)
 	// Создаем новый экземпляр Fiber
 	app := fiber.New()
+	app.Use(recover.New())
 
-	//Определяем обработчик для корневого маршрута
-	// app.Get("/", func(c *fiber.Ctx) error {
-	// 	return c.SendString("Привет, Fiber!")
-	// })
 	home.NewHandler(app)
 
 	// Запускаем сервер на порту 3000
