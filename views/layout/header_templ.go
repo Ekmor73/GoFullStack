@@ -8,13 +8,11 @@ package layout
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "fmt"
-
-func headerClass(percent int) templ.CSSClass {
+func headerClass() templ.CSSClass {
 	templ_7745c5c3_CSSBuilder := templruntime.GetBuilder()
 	templ_7745c5c3_CSSBuilder.WriteString(string(templ.SanitizeCSS(`background`, "#222222")))
+	templ_7745c5c3_CSSBuilder.WriteString(string(templ.SanitizeCSS(`text-align`, "center")))
 	templ_7745c5c3_CSSBuilder.WriteString(string(templ.SanitizeCSS(`color`, "#FFFFFFFF")))
-	templ_7745c5c3_CSSBuilder.WriteString(string(templ.SanitizeCSS(`width`, fmt.Sprintf("%d%%", percent))))
 	templ_7745c5c3_CSSID := templ.CSSID(`headerClass`, templ_7745c5c3_CSSBuilder.String())
 	return templ.ComponentCSSClass{
 		ID:    templ_7745c5c3_CSSID,
@@ -43,7 +41,7 @@ func Header() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		var templ_7745c5c3_Var2 = []any{headerClass(50)}
+		var templ_7745c5c3_Var2 = []any{headerClass()}
 		templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
