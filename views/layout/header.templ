@@ -4,12 +4,12 @@ package layout
 css headerClass() {
     background: { "#222222" };
     text-align: {"center"};
-    color: {"#FFFFFFFF"};
    
 }
 
 templ Header() {
     <div class={headerClass()}>
+        @Menu()
        { children... }
     </div>
 }
