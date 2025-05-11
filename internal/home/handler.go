@@ -26,7 +26,7 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 	}
 	//api := h.router.Group("/api")
 	h.router.Get("/", h.home)
-	h.router.Get("/error", h.error)
+	h.router.Get("/404", h.error)
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
