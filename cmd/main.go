@@ -3,6 +3,7 @@ package main
 import (
 	"go-fiber/config"
 	"go-fiber/internal/home"
+	"go-fiber/internal/vacancy"
 	"go-fiber/pkg/logger"
 
 	"github.com/gofiber/contrib/fiberzerolog"
@@ -31,6 +32,7 @@ func main() {
 	app.Static("/public", "./public")
 
 	home.NewHandler(app, customLogger)
+	vacancy.NewHandler(app, customLogger)
 
 	// Запускаем сервер на порту 3000
 	app.Listen(":3000")
