@@ -1,6 +1,9 @@
 package vacancy
 
 import (
+	"go-fiber/pkg/tadapter"
+	"go-fiber/views/components"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog"
 )
@@ -22,5 +25,6 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 func (h *VacancyHandler) createVacansy(c *fiber.Ctx) error {
 	email := c.FormValue("email")
 	h.customLogger.Info().Msg(email)
-	return c.SendString("createVacansy")
+	component := components.Notification("Вакансия успешно создана")
+	return tadapter.Render(c, component)
 }
