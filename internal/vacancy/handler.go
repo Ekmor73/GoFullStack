@@ -2,6 +2,7 @@ package vacancy
 
 import (
 	"go-fiber/pkg/tadapter"
+	"go-fiber/pkg/validator"
 	"go-fiber/views/components"
 
 	"github.com/a-h/templ"
@@ -37,7 +38,7 @@ func (h *VacancyHandler) createVacansy(c *fiber.Ctx) error {
 	//email := c.FormValue("email")
 	var component templ.Component
 	if len(errors.Errors) > 0 {
-		component = components.Notification("Ошибки", components.NotificationFail)
+		component = components.Notification(validator.FormatErrors(errors), components.NotificationFail)
 		return tadapter.Render(c, component)
 	}
 	component = components.Notification("Вакансия успешно создана", components.NotificationSuccess)
