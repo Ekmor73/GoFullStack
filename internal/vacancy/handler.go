@@ -15,12 +15,14 @@ import (
 type VacancyHandler struct {
 	router       fiber.Router
 	customLogger *zerolog.Logger
+	repository   *VacancRepository
 }
 
-func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
+func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *VacancRepository) {
 	h := &VacancyHandler{
 		router:       router,
 		customLogger: customLogger,
+		repository:   repository,
 	}
 	vacancyGroup := h.router.Group("/vacancy")
 	vacancyGroup.Post("/", h.createVacansy)

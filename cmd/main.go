@@ -35,8 +35,12 @@ func main() {
 	dbpool := database.CreateDbPool(dbConfig, customLogger)
 	defer dbpool.Close()
 
+	// Repositories
+	vacancyRepo := vacancy.NewVacancRepository(dbpool, customLogger)
+
+	// Handler
 	home.NewHandler(app, customLogger)
-	vacancy.NewHandler(app, customLogger)
+	vacancy.NewHandler(app, customLogger, vacancyRepo)
 
 	// Запускаем сервер на порту 3000
 	app.Listen(":3000")
