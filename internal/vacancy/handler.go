@@ -15,10 +15,10 @@ import (
 type VacancyHandler struct {
 	router       fiber.Router
 	customLogger *zerolog.Logger
-	repository   *VacancRepository
+	repository   *VacancyRepository
 }
 
-func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *VacancRepository) {
+func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *VacancyRepository) {
 	h := &VacancyHandler{
 		router:       router,
 		customLogger: customLogger,
@@ -61,6 +61,12 @@ func (h *VacancyHandler) createVacansy(c *fiber.Ctx) error {
 	var component templ.Component
 	if len(errors.Errors) > 0 {
 		component = components.Notification(validator.FormatErrors(errors), components.NotificationFail)
+		return tadapter.Render(c, component)
+	}
+	err := h.repository.addVacancy(form)
+	if err != nil {
+		h.customLogger.Error().Msg(err.Error())
+		component = components.Notification("Произошла ошибка на сервере, попробуйте позднее", components.NotificationFail)
 		return tadapter.Render(c, component)
 	}
 	component = components.Notification("Вакансия успешно создана", components.NotificationSuccess)

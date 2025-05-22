@@ -15,5 +15,6 @@ func CreateDbPool(config *config.DatabaseConfig, logger *zerolog.Logger) *pgxpoo
 		panic(err)
 	}
 	logger.Info().Msg("Подключились к базе данных")
+	//logger.Info().Msgf("Подключаемся к БД: %s", config.Url)
 	return dbpool
 }

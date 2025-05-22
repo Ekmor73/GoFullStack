@@ -1,22 +1,39 @@
 package vacancy
 
 import (
+	"context"
+	"fmt"
+
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/rs/zerolog"
 )
 
-type VacancRepository struct {
+type VacancyRepository struct {
 	Dbpool       *pgxpool.Pool
 	CustomLogger *zerolog.Logger
 }
 
-func NewVacancRepository(dbpool *pgxpool.Pool, customLogger *zerolog.Logger) *VacancRepository {
-	return &VacancRepository{
+func NewVacancRepository(dbpool *pgxpool.Pool, customLogger *zerolog.Logger) *VacancyRepository {
+	return &VacancyRepository{
 		Dbpool:       dbpool,
 		CustomLogger: customLogger,
 	}
 }
 
-func (r *VacancRepository) addVacancy(form VacancRepository) {
-
+func (r *VacancyRepository) addVacancy(form VacancyCreateForm) error {
+	query := `INSERT INTO vacancies (email, role, company, salary, type, location) VALUES (@email, @role, @company, @salary, @type, @location)`
+	args := pgx.NamedArgs{
+		"email":    form.Email,
+		"role":     form.Role,
+		"company":  form.Company,
+		"salary":   form.Salary,
+		"type":     form.Type,
+		"location": form.Location,
+	}
+	_, err := r.Dbpool.Exec(context.Background(), query, args)
+	if err != nil {
+		return fmt.Errorf("Невозможно созадать вакансию: %w", err)
+	}
+	return nil
 }
