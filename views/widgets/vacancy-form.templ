@@ -13,8 +13,13 @@ templ VacancyForm() {
             hx-target="#vacancy-result" 
             hx-target-error="#vacancy-result" 
             hx-swap="innerHTML swap:1s"
-            hx-on::after-request="if(event.detail.successful) this.reset()"
+            hx-on::after-request="if(event.detail.successful) this.reset()"	
         >
+
+
+ 
+
+
             <div class="vacansy-form__inputs">
                 @components.Input(components.InputProps{
                     Placeholder: "Должность",
