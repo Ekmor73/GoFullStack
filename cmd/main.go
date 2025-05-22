@@ -36,7 +36,7 @@ func main() {
 	defer dbpool.Close()
 
 	// Repositories
-	vacancyRepo := vacancy.NewVacancRepository(dbpool, customLogger)
+	vacancyRepo := vacancy.NewVacancyRepository(dbpool, customLogger)
 
 	// Handler
 	home.NewHandler(app, customLogger)

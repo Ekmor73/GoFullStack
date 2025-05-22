@@ -26,10 +26,19 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *V
 		repository:   repository,
 	}
 	vacancyGroup := h.router.Group("/vacancy")
-	vacancyGroup.Post("/", h.createVacansy)
+	vacancyGroup.Post("/", h.createVacancy)
+	vacancyGroup.Get("/", h.getAll)
 }
 
-func (h *VacancyHandler) createVacansy(c *fiber.Ctx) error {
+func (h *VacancyHandler) getAll(c *fiber.Ctx) error {
+	vacancies, err := h.repository.getAll()
+	if err != nil {
+		h.customLogger.Error().Msg(err.Error())
+	}
+	return c.JSON(vacancies)
+}
+
+func (h *VacancyHandler) createVacancy(c *fiber.Ctx) error {
 	form := VacancyCreateForm{
 		Email:    c.FormValue("email"),
 		Location: c.FormValue("location"),
@@ -39,26 +48,13 @@ func (h *VacancyHandler) createVacansy(c *fiber.Ctx) error {
 		Salary:   c.FormValue("salary"),
 	}
 	errors := validate.Validate(
-		&validators.EmailIsPresent{Name: "Email",
-			Field:   form.Email,
-			Message: "Email не задан или не верный"},
-		&validators.StringIsPresent{Name: "Location",
-			Field:   form.Location,
-			Message: "Расположение не задано"},
-		&validators.StringIsPresent{Name: "Type",
-			Field:   form.Type,
-			Message: "Сфера компаний не задана"},
-		&validators.StringIsPresent{Name: "Company",
-			Field:   form.Company,
-			Message: "Название компании не задано"},
-		&validators.StringIsPresent{Name: "Role",
-			Field:   form.Role,
-			Message: "Должность не задана"},
-		&validators.StringIsPresent{Name: "Salary",
-			Field:   form.Salary,
-			Message: "Зароботная плата не задана"},
+		&validators.EmailIsPresent{Name: "Email", Field: form.Email, Message: "Email не задан или неверный"},
+		&validators.StringIsPresent{Name: "Location", Field: form.Location, Message: "Расположение не задано"},
+		&validators.StringIsPresent{Name: "Type", Field: form.Type, Message: "Сфера компании не задана"},
+		&validators.StringIsPresent{Name: "Company", Field: form.Company, Message: "Название компании не задано"},
+		&validators.StringIsPresent{Name: "Role", Field: form.Role, Message: "Должность не задана"},
+		&validators.StringIsPresent{Name: "Salary", Field: form.Salary, Message: "Зарплата не задана"},
 	)
-	//time.Sleep(time.Second * 1)
 	var component templ.Component
 	if len(errors.Errors) > 0 {
 		component = components.Notification(validator.FormatErrors(errors), components.NotificationFail)

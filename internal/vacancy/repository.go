@@ -15,11 +15,24 @@ type VacancyRepository struct {
 	CustomLogger *zerolog.Logger
 }
 
-func NewVacancRepository(dbpool *pgxpool.Pool, customLogger *zerolog.Logger) *VacancyRepository {
+func NewVacancyRepository(dbpool *pgxpool.Pool, customLogger *zerolog.Logger) *VacancyRepository {
 	return &VacancyRepository{
 		Dbpool:       dbpool,
 		CustomLogger: customLogger,
 	}
+}
+
+func (r *VacancyRepository) getAll() ([]Vacancy, error) {
+	query := "SELECT * from vacancies"
+	rows, err := r.Dbpool.Query(context.Background(), query)
+	if err != nil {
+		return nil, err
+	}
+	vacancies, err := pgx.CollectRows(rows, pgx.RowToStructByName[Vacancy])
+	if err != nil {
+		return nil, err
+	}
+	return vacancies, nil
 }
 
 func (r *VacancyRepository) addVacancy(form VacancyCreateForm) error {
@@ -35,7 +48,7 @@ func (r *VacancyRepository) addVacancy(form VacancyCreateForm) error {
 	}
 	_, err := r.Dbpool.Exec(context.Background(), query, args)
 	if err != nil {
-		return fmt.Errorf("Невозможно созадать вакансию: %w", err)
+		return fmt.Errorf("Невозможно создать вакансию: %w", err)
 	}
 	return nil
 }
