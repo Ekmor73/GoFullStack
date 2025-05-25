@@ -39,7 +39,7 @@ func main() {
 	vacancyRepo := vacancy.NewVacancyRepository(dbpool, customLogger)
 
 	// Handler
-	home.NewHandler(app, customLogger)
+	home.NewHandler(app, customLogger, vacancyRepo)
 	vacancy.NewHandler(app, customLogger, vacancyRepo)
 
 	// Запускаем сервер на порту 3000
