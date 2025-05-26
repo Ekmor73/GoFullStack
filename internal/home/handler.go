@@ -4,6 +4,7 @@ import (
 	"go-fiber/internal/vacancy"
 	"go-fiber/pkg/tadapter"
 	"go-fiber/views"
+	"math"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -28,7 +29,6 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *v
 		customLogger: customLogger,
 		repository:   repository,
 	}
-	//api := h.router.Group("/api")
 	h.router.Get("/", h.home)
 	h.router.Get("/404", h.error)
 }
@@ -36,23 +36,23 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *v
 func (h *HomeHandler) home(c *fiber.Ctx) error {
 	PAGE_ITEMS := 2
 	page := c.QueryInt("page", 1)
+	count := h.repository.CountAll()
 	vacancies, err := h.repository.GetAll(PAGE_ITEMS, (page-1)*PAGE_ITEMS)
 	if err != nil {
 		h.customLogger.Error().Msg(err.Error())
 		return c.SendStatus(500)
 	}
-	component := views.Main(vacancies)
-	//component.Render(context.Background(), os.Stdout)
+	//component := views.Main(vacancies, int(math.Ceil(float64(count/PAGE_ITEMS))), page)
+	pagesCount := int(math.Ceil(float64(count) / float64(PAGE_ITEMS)))
+	component := views.Main(vacancies, pagesCount, page)
 	return tadapter.Render(c, component, http.StatusOK)
 }
 
 func (h *HomeHandler) error(c *fiber.Ctx) error {
-
 	h.customLogger.Info().
 		Bool("isAdmin", true).
 		Str("email", "a@a.ru").
 		Int("id", 10).
 		Msg("Инфо")
-
 	return c.SendString("Error")
 }

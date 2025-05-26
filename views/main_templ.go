@@ -13,7 +13,7 @@ import "go-fiber/views/layout"
 import "go-fiber/views/widgets"
 import "go-fiber/internal/vacancy"
 
-func Main(vacancies []vacancy.Vacancy) templ.Component {
+func Main(vacancies []vacancy.Vacancy, pagesCount, page int) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -84,7 +84,7 @@ func Main(vacancies []vacancy.Vacancy) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = widgets.VacancyList(vacancies).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = widgets.VacancyList(vacancies, pagesCount, page).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -134,7 +134,7 @@ func MainStyle() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<style>\n        .main__submit-form{\n\t\t\tdisplay: flex;\n\t\t\talign-items: center;\n\t\t\tjustify-content: center;\n            background-color: rgba(48, 150, 137, 0.10);\n\t\t\tpadding: 60px 0 120px 0;\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<style>\n\t.main__submit-form {\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t\tbackground: rgba(48, 150, 137, 0.10);\n\t\tpadding: 60px 0 120px 0;\n\t}\n</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
