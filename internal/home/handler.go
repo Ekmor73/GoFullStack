@@ -9,7 +9,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog"
-	//"github.com/rs/zerolog/log"
 )
 
 type HomeHandler struct {
@@ -30,6 +29,7 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger, repository *v
 		repository:   repository,
 	}
 	h.router.Get("/", h.home)
+	h.router.Get("/login", h.login)
 	h.router.Get("/404", h.error)
 }
 
@@ -42,9 +42,12 @@ func (h *HomeHandler) home(c *fiber.Ctx) error {
 		h.customLogger.Error().Msg(err.Error())
 		return c.SendStatus(500)
 	}
-	//component := views.Main(vacancies, int(math.Ceil(float64(count/PAGE_ITEMS))), page)
-	pagesCount := int(math.Ceil(float64(count) / float64(PAGE_ITEMS)))
-	component := views.Main(vacancies, pagesCount, page)
+	component := views.Main(vacancies, int(math.Ceil(float64(count/PAGE_ITEMS))), page)
+	return tadapter.Render(c, component, http.StatusOK)
+}
+
+func (h *HomeHandler) login(c *fiber.Ctx) error {
+	component := views.Login()
 	return tadapter.Render(c, component, http.StatusOK)
 }
 

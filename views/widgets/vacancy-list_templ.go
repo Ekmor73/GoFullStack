@@ -63,12 +63,12 @@ func VacancyList(vacancies []vacancy.Vacancy, pagesCount, page int) templ.Compon
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><div class=\"vacancy-list__paginaton\"><div class=\"vacancy-list__paginaton-item\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if page != 1 {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a href=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<img src=\"/public/icons/chevron-left.svg\" alt=\"Стрелка влево\"> <a href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -77,13 +77,17 @@ func VacancyList(vacancies []vacancy.Vacancy, pagesCount, page int) templ.Compon
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\">Предыдущие</a> ")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\">Предыдущие</a>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div><div class=\"vacancy-list__paginaton-item\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		if page != pagesCount {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<a href=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<a href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -92,12 +96,12 @@ func VacancyList(vacancies []vacancy.Vacancy, pagesCount, page int) templ.Compon
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\">Следующие</a>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\">Следующие</a> <img src=\"/public/icons/chevron-right.svg\" alt=\"Стрелка справо\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -126,7 +130,7 @@ func VacancyListStyle() templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<style>\n\t.vacancy-list__wrapper {\n\t\twidth: 100%;\n\t\tmax-width: 1296px;\n\t\tmargin: 0 auto;\n\t\tpadding: 60px 0;\n\t}\n\t.vacancy-list__wrapper p {\n\t\tmargin-bottom: 60px;\n\t}\n\t.vacancy-list {\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tflex-direction: column;\n\t\tgap: 24px;\n\t}\n</style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<style>\n\t.vacancy-list__wrapper {\n\t\twidth: 100%;\n\t\tmax-width: 1296px;\n\t\tmargin: 0 auto;\n\t\tpadding: 60px 0;\n\t}\n\t.vacancy-list__wrapper p {\n\t\tmargin-bottom: 60px;\n\t}\n\t.vacancy-list {\n\t\tdisplay: flex;\n\t\talign-items: center;\n\t\tflex-direction: column;\n\t\tgap: 24px;\n\t\tmargin-bottom: 50px;\n\t}\n\t.vacancy-list__paginaton {\n\t\tdisplay: flex;\n\t\tjustify-content: space-between;\n\t\tgap: 24px;\n\t}\n\t.vacancy-list__paginaton-item {\n\t\tdisplay: flex;\n\t\tgap: 8px;\n\t\talign-items: center;\n\t}\n\t.vacancy-list__paginaton-item a {\n\t\ttext-decoration: none;\n\t\tcolor: #6C757D;\n\t}\n\t.vacancy-list__paginaton-item a:hover {\n\t\tcolor: #545a60;\n\t}\n</style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
