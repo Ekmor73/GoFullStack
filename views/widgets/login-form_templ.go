@@ -35,7 +35,7 @@ func LoginForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<form hx-post=\"/\" hx-trigger=\"submit\" class=\"login-form\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div id=\"login-result\"></div><form hx-ext=\"response-targets\" hx-post=\"/api/login\" hx-trigger=\"submit\" class=\"login-form\" hx-target-error=\"#login-result\" hx-swap=\"innerHTML\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -49,6 +49,7 @@ func LoginForm() templ.Component {
 		templ_7745c5c3_Err = components.Input(components.InputProps{
 			Name:        "password",
 			Placeholder: "Пароль",
+			Type:        "password",
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -104,7 +105,7 @@ func LoginFormStyle() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\n        .login-form {\n            display: flex;\n            flex-direction: column;\n            gap: 30px;\n            width: 100%;\n            max-width: 520px;\n        }\n    </style>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<style>\n    #login-result {\n        margin-bottom: 10px;\n    }\n        .login-form {\n            display: flex;\n            flex-direction: column;\n            gap: 30px;\n            width: 100%;\n            max-width: 520px;\n        }\n    </style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
