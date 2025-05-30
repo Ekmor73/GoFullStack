@@ -5,7 +5,7 @@ go 1.24.1
 require (
 	github.com/a-h/templ v0.3.865
 	github.com/gofiber/contrib/fiberzerolog v1.0.3
-	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/gofiber/fiber/v2 v2.52.8
 	github.com/joho/godotenv v1.5.1
 	github.com/rs/zerolog v1.34.0
 )
@@ -13,6 +13,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/gobuffalo/validate v2.0.4+incompatible // indirect
+	github.com/gofiber/storage/postgres/v3 v3.2.0 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
