@@ -7,7 +7,7 @@ import (
 
 func AuthMiddleware(store *session.Store) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		sess, err := h.store.Get(c)
+		sess, err := store.Get(c)
 		if err != nil {
 			panic(err)
 		}
